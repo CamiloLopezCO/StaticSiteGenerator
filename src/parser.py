@@ -15,7 +15,6 @@ from conversions import text_node_to_html_node
 def text_to_textnodes(text):
     nodes = [TextNode(text, TextType.TEXT)]
 
-    # Important: Handle in correct order
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
     nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
@@ -42,7 +41,7 @@ def markdown_to_blocks(markdown):
     return blocks
 
 def block_to_block_type(block):
-    block = block.strip() 
+    block = block.strip()
 
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
@@ -101,7 +100,7 @@ def markdown_to_html_node(markdown):
 
         elif block_type == BlockType.CODE:
             code_lines = block.split("\n")
-            code_content = "\n".join(code_lines[1:-1])
+            code_content = "\n".join(code_lines[1:-1])  # Remove the ```
             code_leaf = LeafNode("code", code_content)
             pre_node = ParentNode("pre", [code_leaf])
             children.append(pre_node)
@@ -133,4 +132,3 @@ def markdown_to_html_node(markdown):
             children.append(ol_node)
 
     return ParentNode("div", children)
-
