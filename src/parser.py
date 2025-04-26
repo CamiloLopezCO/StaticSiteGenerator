@@ -43,7 +43,7 @@ def markdown_to_blocks(markdown):
 
 def block_to_block_type(block):
     block = block.strip() 
-    
+
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
 
@@ -83,11 +83,11 @@ def markdown_to_html_node(markdown):
     children = []
 
     for block in blocks:
-        block = block.strip()  # Clean up each block before processing
+        block = block.strip()
         block_type = block_to_block_type(block)
 
         if block_type == BlockType.PARAGRAPH:
-            block = block.replace("\n", " ")  # Merge multi-line paragraphs
+            block = block.replace("\n", " ")
             paragraph_node = ParentNode("p", text_to_children(block))
             children.append(paragraph_node)
 
@@ -100,10 +100,10 @@ def markdown_to_html_node(markdown):
                 children.append(heading_node)
 
         elif block_type == BlockType.CODE:
-            lines = block.split("\n")
-            code_text = "\n".join(lines[1:-1])  # Skip first and last lines (triple backticks)
-            code_node = LeafNode("code", code_text)
-            pre_node = ParentNode("pre", [code_node])
+            code_lines = block.split("\n")
+            code_content = "\n".join(code_lines[1:-1])
+            code_leaf = LeafNode("code", code_content)
+            pre_node = ParentNode("pre", [code_leaf])
             children.append(pre_node)
 
         elif block_type == BlockType.QUOTE:
@@ -133,3 +133,4 @@ def markdown_to_html_node(markdown):
             children.append(ol_node)
 
     return ParentNode("div", children)
+
