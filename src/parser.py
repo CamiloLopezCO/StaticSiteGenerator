@@ -42,6 +42,8 @@ def markdown_to_blocks(markdown):
     return blocks
 
 def block_to_block_type(block):
+    block = block.strip() 
+    
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
 
