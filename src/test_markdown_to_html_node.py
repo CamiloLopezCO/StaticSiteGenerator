@@ -80,4 +80,3 @@ This is another paragraph with _italic_ text and `code` here
 
 if __name__ == "__main__":
     unittest.main()
-
