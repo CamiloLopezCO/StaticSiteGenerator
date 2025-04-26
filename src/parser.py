@@ -81,11 +81,11 @@ def markdown_to_html_node(markdown):
     children = []
 
     for block in blocks:
-	block = block.strip()
+        block = block.strip()  # Clean up each block before processing
         block_type = block_to_block_type(block)
 
         if block_type == BlockType.PARAGRAPH:
-            block = block.replace("\n", " ")  # fix: newlines inside paragraph -> spaces
+            block = block.replace("\n", " ")  # Merge multi-line paragraphs
             paragraph_node = ParentNode("p", text_to_children(block))
             children.append(paragraph_node)
 
@@ -98,10 +98,10 @@ def markdown_to_html_node(markdown):
                 children.append(heading_node)
 
         elif block_type == BlockType.CODE:
-            # fix: properly handle code blocks by ignoring first and last lines (triple backticks)
-            code_text = "\n".join(block.split("\n")[1:-1])
-            code_leaf = LeafNode("code", code_text)
-            pre_node = ParentNode("pre", [code_leaf])
+            lines = block.split("\n")
+            code_text = "\n".join(lines[1:-1])  # Skip first and last lines (triple backticks)
+            code_node = LeafNode("code", code_text)
+            pre_node = ParentNode("pre", [code_node])
             children.append(pre_node)
 
         elif block_type == BlockType.QUOTE:
@@ -130,5 +130,4 @@ def markdown_to_html_node(markdown):
             ol_node = ParentNode("ol", list_items)
             children.append(ol_node)
 
-    # 🚨 THIS LINE IS MANDATORY:
     return ParentNode("div", children)
