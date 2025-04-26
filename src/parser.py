@@ -100,7 +100,7 @@ def markdown_to_html_node(markdown):
 
         elif block_type == BlockType.CODE:
             code_lines = block.split("\n")
-            code_content = "\n".join(code_lines[1:-1])  # Remove the ```
+            code_content = "\n".join(code_lines[1:-1]) + "\n"  # ✅ Add missing \n at end
             code_leaf = LeafNode("code", code_content)
             pre_node = ParentNode("pre", [code_leaf])
             children.append(pre_node)
