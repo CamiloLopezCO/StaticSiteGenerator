@@ -9,6 +9,7 @@ from splitter import (
 )
 from extractor import extract_markdown_images, extract_markdown_links
 from conversions import text_node_to_html_node
+from parser import extract_title
 
 # --- Inline Text Splitting ---
 
@@ -132,3 +133,10 @@ def markdown_to_html_node(markdown):
             children.append(ol_node)
 
     return ParentNode("div", children)
+
+def extract_title(markdown):
+	lines = markdown.split("\n")
+	for line in lines:
+		if line.startswith("# "):
+			return line[2:].strip()
+	raise Exception("No H1 title found in the markdown file.")
