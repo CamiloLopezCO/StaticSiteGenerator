@@ -1,5 +1,12 @@
 import re
 
+def extract_title(markdown):
+    lines = markdown.split("\n")
+    for line in lines:
+        if line.startswith("# "):
+            return line[2:].strip()
+    raise Exception("No H1 header found in markdown")
+
 def extract_markdown_images(text):
     # Find all matches for markdown images
     image_regex = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
