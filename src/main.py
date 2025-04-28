@@ -1,7 +1,8 @@
 import os
 import shutil
-from parser import markdown_to_html_node
 from extractor import extract_title
+from parser import markdown_to_html_node
+
 
 def clear_and_copy_static(src_dir, dest_dir):
     if os.path.exists(dest_dir):
