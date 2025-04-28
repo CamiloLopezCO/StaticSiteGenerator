@@ -2,7 +2,7 @@ import os
 import shutil
 from extractor import extract_title
 from parser import markdown_to_html_node
-
+from generator import generate_pages_recursive  # <-- NEW import
 
 def clear_and_copy_static(src_dir, dest_dir):
     if os.path.exists(dest_dir):
@@ -23,31 +23,11 @@ def clear_and_copy_static(src_dir, dest_dir):
             shutil.copytree(src_path, dest_path)
             print(f"Copied directory: {src_path} -> {dest_path}")
 
-def generate_page(from_path, template_path, dest_path):
-    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
-
-    with open(from_path, "r") as f:
-        markdown = f.read()
-
-    with open(template_path, "r") as f:
-        template = f.read()
-
-    html_node = markdown_to_html_node(markdown)
-    html_content = html_node.to_html()
-    title = extract_title(markdown)
-
-    result = template.replace("{{ Title }}", title).replace("{{ Content }}", html_content)
-
-    dest_dir = os.path.dirname(dest_path)
-    if not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
-
-    with open(dest_path, "w") as f:
-        f.write(result)
-
 def main():
     clear_and_copy_static("static", "public")
-    generate_page("content/index.md", "template.html", "public/index.html")
+
+    # 🚨 Now generate ALL pages recursively (index.md + all blog posts)
+    generate_pages_recursive("content", "template.html", "public")
 
 if __name__ == "__main__":
     main()
