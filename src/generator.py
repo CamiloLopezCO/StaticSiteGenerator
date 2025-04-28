@@ -30,7 +30,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 
         if os.path.isfile(entry_path) and entry_path.endswith(".md"):
             # It's a markdown file, create corresponding HTML
-            relative_path = os.path.relpath(entry_path, dir_path_content)
+            relative_path = os.path.relpath(entry_path, "content")
             dest_path = os.path.join(dest_dir_path, os.path.splitext(relative_path)[0] + ".html")
             os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
