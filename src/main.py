@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 from extractor import extract_title
 from parser import markdown_to_html_node
 from generator import generate_pages_recursive  # <-- NEW import
@@ -24,10 +25,13 @@ def clear_and_copy_static(src_dir, dest_dir):
             print(f"Copied directory: {src_path} -> {dest_path}")
 
 def main():
-    clear_and_copy_static("static", "public")
+    #Get base path from CLI argument (or default to '/')
+    base_path = sys.argv[1] if len(sys.argv) > 1 else "/"
+
+    clear_and_copy_static("static", "docs")  # 🚨 Now generate into 'docs' no
 
     # 🚨 Now generate ALL pages recursively (index.md + all blog posts)
-    generate_pages_recursive("content", "template.html", "public")
+    generate_pages_recursive("content", "template.html", "docs", base_path)
 
 if __name__ == "__main__":
     main()
