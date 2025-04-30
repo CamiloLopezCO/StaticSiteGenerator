@@ -17,6 +17,4 @@ A Python-powered static site generator that converts Markdown content into fully
 - Builds styles and assets into the `docs/` directory
 - GitHub Pages-compatible with support for custom base paths
 
-## Project Structure
-
 
